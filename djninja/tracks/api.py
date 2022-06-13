@@ -50,3 +50,11 @@ def delete_track(request, track_id: int):
     except Track.DoesNotExist as e:
         return 404, {"message": "Track you are looking for does not exist!"}
 
+
+@api.post("/upload", url_name='upload')
+def upload(request, file: UploadedFile = File(...)):
+    data = file.read().decode()
+    return {
+        'name': file.name,
+        'data': data,
+    }
