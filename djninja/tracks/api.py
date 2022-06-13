@@ -41,4 +41,12 @@ def change_track(request, track_id: int, data: TrackSchema):
     except Track.DoesNotExist as e:
         return 404, {"message": "Track you are looking for does not exist!"}
 
+@api.delete("/tracks/{track_id}", response={200: None, 404: NotFoundSchema})
+def delete_track(request, track_id: int):
+    try:
+        track = Track.objects.get(pk=track_id)
+        track.delete()
+        return 200
+    except Track.DoesNotExist as e:
+        return 404, {"message": "Track you are looking for does not exist!"}
 
